@@ -17,7 +17,7 @@ O objetivo principal é construir um pipeline de dados eficiente para coletar, t
   - [NBA Database](https://www.kaggle.com/datasets/wyattowalsh/basketball)
     - Fonte: API oficial do site [stats.nba.com](https://stats.nba.com)  
     - Autor: Wyatt Walsh
-  - (https://www.kaggle.com/datasets/drgilermo/nba-players-stats
+  - [NBA Players stats since 1950 ](https://www.kaggle.com/datasets/drgilermo/nba-players-stats)
     - Fonte: [Basketball Reference](https://www.basketball-reference.com)   
     - Autor: Omri Goldstein
 
