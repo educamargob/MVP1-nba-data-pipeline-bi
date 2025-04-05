@@ -14,7 +14,8 @@ Analisar dados históricos da NBA para responder perguntas analíticas relevante
 - **Qlik Cloud**: Visualização e análise interativa dos dados.
 - **GitHub**: Versionamento e centralização dos scripts.
 - **Datasets**:
-  - NBA Players Stats since 1950
+  - NBA Players Stats since 1950:
+    - Autor
   - NBA Games
   - Dados complementares (universidades, posições, top 75, etc.)
 
