@@ -1,0 +1,291 @@
+//
+Jogadores:
+LOAD
+    PK_PLAYER							as PK_Jogador,
+    NOME_COMPLETO						as [Jogador - Nome Completo],
+    NOME								as [Jogador - Nome],
+    SOBRENOME							as [Jogador - Sobrenome],
+    EM_ATIVIDADE						as [Jogador - Ativo],
+    Date(DATA_NASCIMENTO, 'DD/MM/YYYY')	as [Jogador - Data Nascimento],
+    UNIVERSIDADE						as [Jogador - Universidade],
+    PAIS								as [Jogador - País],
+    ALTURA_POLEGADAS					as [Jogador - Altura Pol.],
+    ALTURA_CM	 						as [Jogador - Altura Cm],
+    ALTURA_PES							as [Jogador - Altura Pés],
+    PESO_LIBRAS							as [Jogador - Peso Libras],
+    PESO_KG								as [Jogador - Peso Kg],
+    TEMPORADAS							as [Jogador - Temporadas],
+    NUM_CAMISA  						as [Jogador - Num. Camisa],
+    POSICAO								as [Jogador - Posição],
+    Year(PRIMEIRO_ANO_NBA)				as [Jogador - Primeiro ano],
+    Year(ULTIMO_ANO_NBA)				as [Jogador - Último ano registrado],
+    RODADA_DRAFT						as [Jogador - Rodada Draft],
+    NUMERO_ESCOLHA_DRAFT				as [Jogador - Num Escolha Draft],
+    TOP_75_JOGADORES					as [Jogador - Top 75],
+    TIME_DRAFT							as [Jogador - Time Draft],
+    TIME_DRAFT_CIDADE					as [Jogador - Time Draft Cidade],
+    TIME_ABRV							as [Jogador - Time Draft Abreviação],
+    ORGANIZACAO_ANTES_NBA				as [Jogador - Organização Anterior],
+    ORGANIZACAO_TIPO					as [Jogador - Tipo Organização]
+FROM [lib://DataFiles/Extraidos/NBA/DIM_JOGADOR.qvd](qvd);
+Store Jogadores into [lib://DataFiles/Transformados/NBA/Jogadores.qvd] (qvd);
+Drop Table Jogadores;
+
+//
+Estatísticas_Temporada_Jogador:
+LOAD
+    PK_PLAYER							as PK_Jogador,
+    PK_PLAYER &'|'& TEMPORADA 			as PK_Jogador_Temporada,
+    PK_TEAM	&'|'& TEMPORADA				as PK_Time_Temporada,
+    TEMPORADA							as Temporada,
+    IDADE_JOGADOR						as [Estatística - Idade Jogador],
+    POSICAO_JOGADOR						as [Estatística - Posição Jogador],
+    JOGOS								as [Estatística - Jogos],
+    MINUTOS_JOGADOS						as [Estatística - Minutos Jogados],
+    TENTATIVAS_ARREMESSOS				as [Estatística - Arremessos],
+    ACERTOS_AREMESSOS					as [Estatística - Acertos],
+    PERC_ACERTOS_ARREMESSOS				as [Estatística - % Acertos],
+    TENTATIVAS_ARREMESSOS_3PT			as [Estatística - Arremessos 3pt],
+    ACERTOS_AREMESSOS_3PT				as [Estatística - Acertos 3pt],
+    PERC_ACERTOS_ARREMESSOS_3PT			as [Estatística - % Acertos 3pt],
+    TENTATIVAS_ARREMESSOS_2PT			as [Estatística - Arremessos 2pt],
+    ACERTOS_AREMESSOS_2PT				as [Estatística - Acertos 2pt],
+    PERC_ACERTOS_ARREMESSOS_2PT			as [Estatística - % Acertos 2pt],
+    PERC_EFICIENCIA_ARREMESSOS			as [Estatística - % Arremessos Eficazes],
+    TENTATIVAS_ARREMESSOS_LANCELIVRE	as [Estatística - Lances Livres],
+    ACERTOS_AREMESSOS_LANCELIVRE		as [Estatística - Acertos Lances Livres],
+    PERC_ACERTOS_ARREMESSOS_LANCELIVRE	as [Estatística - % Acertos Lances Livres],
+    REBOTES_OFENSIVOS					as [Estatística - Rebotes Ofensivos],
+    REBOTES_DEFENSIVOS					as [Estatística - Rebotes Defensivos],
+    REBOTES_OFENSIVOS + REBOTES_DEFENSIVOS	as [Estatística - Rebotes],
+    ASSISTENCIAS						as [Estatística - Assistências],
+    ROUBOS								as [Estatística - Roubos],
+    BLOQUEIOS							as [Estatística - Bloqueios],
+    TURNOVERS							as [Estatística - Turnovers],
+    FALTAS								as [Estatística - Faltas],
+    PONTOS								as [Estatística - Pontos]
+FROM [lib://DataFiles/Extraidos/NBA/FATO_STATS_TEMPORADA.qvd](qvd);
+
+Left Join (Estatísticas_Temporada_Jogador)
+//
+//Estatísticas_Máximas_Temporada:
+LOAD
+    Temporada,
+    Max([Estatística - Acertos 3pt])			as [EstatísticaMax - Acertos 3pt],
+    Max([Estatística - Acertos 2pt])			as [EstatísticaMax - Acertos 2pt],
+    Max([Estatística - Acertos Lances Livres])	as [EstatísticaMax - Acertos Lances Livres],
+    Max([Estatística - Rebotes])				as [EstatísticaMax - Rebotes],
+    Max([Estatística - Assistências])			as [EstatísticaMax - Assistências],
+    Max([Estatística - Roubos])					as [EstatísticaMax - Roubos],
+    Max([Estatística - Bloqueios])				as [EstatísticaMax - Bloqueios],
+    Min([Estatística - Acertos 3pt])			as [EstatísticaMin - Acertos 3pt],
+    Min([Estatística - Acertos 2pt])			as [EstatísticaMin - Acertos 2pt],
+    Min([Estatística - Acertos Lances Livres])	as [EstatísticaMin - Acertos Lances Livres],
+    Min([Estatística - Rebotes])				as [EstatísticaMin - Rebotes],
+    Min([Estatística - Assistências])			as [EstatísticaMin - Assistências],
+    Min([Estatística - Roubos])					as [EstatísticaMin - Roubos],
+    Min([Estatística - Bloqueios])				as [EstatísticaMin - Bloqueios]
+FROM [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Group By Temporada;
+
+
+Store Estatísticas_Temporada_Jogador into [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd);
+Drop Table Estatísticas_Temporada_Jogador;
+
+//
+Jogos_tmp:
+LOAD
+    PK_JOGO								as PK_Jogo,
+    PK_TIME								as PK_Time,
+    POSICAO_TIME						as [Jogo - Posição Time],
+    If(IsNull(TEMPORADA), If(Month(DATA_JOGO) >= 10, 
+    					 	Year(DATA_JOGO) &'-'& Mid((Year(DATA_JOGO) + 1), 3),
+                        	(Year(DATA_JOGO) - 1) &'-'& Mid(Year(DATA_JOGO), 3)),
+                          TEMPORADA)	as [Jogo - Temporada],
+                          
+    Date(DATA_JOGO, 'DD/MM/YYYY')		as [Jogo - Data],
+    Dual(Year(DATA_JOGO) &'-'& Month(DATA_JOGO), MonthStart(DATA_JOGO)) as [Jogo - AnoMês],
+    ADVERSARIO							as [Jogo - Adversário],
+    GANHOU_PERDEU						as [Jogo - Ganhou/Perdeu],
+    REBOTES								as [Jogo - Rebotes],
+    ASSISTENCIAS						as [Jogo - Assistências],
+    ROUBOS								as [Jogo - Roubos],
+    BLOQUEIOS							as [Jogo - Bloqueios],
+    TURNOVERS							as [Jogo - Turnovers],
+    FALTAS								as [Jogo - Faltas],
+    PONTOS								as [Jogo - Pontos],
+    TIPO_TEMPORADA						as [Jogo - Tipo Temporada]
+FROM [lib://DataFiles/Extraidos/NBA/FATO_JOGO.qvd](qvd)
+Where Date(DATA_JOGO, 'DD/MM/YYYY') <= '12/06/2017';
+
+NoConcatenate
+
+Jogos:
+Load
+	*,
+	 PK_Time &'|'& [Jogo - Temporada]	as PK_Time_Temporada
+Resident Jogos_tmp;
+Drop Table Jogos_tmp;
+
+Store Jogos into [lib://DataFiles/Transformados/NBA/Jogos.qvd] (qvd);
+Drop Table Jogos;
+
+//
+Map_Time_Ativo:
+Mapping
+Load
+	PK_Time,
+    1
+From [lib://DataFiles/Transformados/NBA/Jogos.qvd] (qvd)
+Where [Jogo - Temporada] = '2016-17';
+
+//
+Times:
+LOAD
+    PK_TIME				as PK_Time,
+    NOME_TIME			as [Time - Nome],
+    NOME_ABREVIADO		as [Time - Nome Abreviado],
+    APELIDO				as [Time - Apelido],
+    ESTADO				as [Time - Estado],
+    CIDADE				as [Time - Cidade],
+    Year(ANO_FUNDACAO)	as [Time - Ano Fundação],
+    ApplyMap('Map_Time_Ativo', PK_TIME, 0) as [Time - Ativo]
+FROM [lib://DataFiles/Extraidos/NBA/DIM_TIME.qvd](qvd);
+Store Times into [lib://DataFiles/Transformados/NBA/Times.qvd] (qvd);
+Drop Table Times;
+
+//
+Times_Campeões:
+Load
+	"Jogo - Temporada",
+    Date(Max("Jogo - Data"), 'DD/MM/YYYY') as [Campeão - Último Jogo Temporada]
+From [lib://DataFiles/Transformados/NBA/Jogos.qvd] (qvd)
+Where
+	"Jogo - Tipo Temporada" = 'Playoffs' 
+    and "Jogo - Ganhou/Perdeu" = 'W'
+Group By "Jogo - Temporada";
+
+Left Join(Times_Campeões)
+
+Load
+    "Jogo - Data" as [Campeão - Último Jogo Temporada],
+    PK_Time
+From [lib://DataFiles/Transformados/NBA/Jogos.qvd] (qvd)
+Where
+	"Jogo - Tipo Temporada" = 'Playoffs' 
+    and "Jogo - Ganhou/Perdeu" = 'W';
+    
+Concatenate (Times_Campeões)
+Load * Inline 
+[
+	PK_Time, Campeão - Último Jogo Temporada
+    1610612786, 12/04/1958
+    1610612738,	09/04/1959
+    1610612738,	25/04/1965
+    1610612738, 18/04/1961
+    1610612738, 05/05/1969
+    1610612745,	22/06/1994
+    1610612741, 16/06/1996
+    1610612747,	19/06/2000
+    1610612747,	12/06/2002
+    1610612748, 20/06/2006
+];
+    
+Store Times_Campeões into [lib://DataFiles/Transformados/NBA/Times_Campeões.qvd] (qvd);
+Drop Table Times_Campeões;
+
+//
+Arbitros_Jogo:
+LOAD
+	PK_JOGO					as PK_Jogo,
+    PK_ARBITRO				as PK_Arbitro,
+    NOME					as [Arbitro - Nome],
+    SOBRENOME				as [Arbitro - Sobrenome],
+    NOME &' '& SOBRENOME	as [Arbitro - Nome Completo]
+FROM [lib://DataFiles/Extraidos/NBA/DIM_ARBITRO_JOGO.qvd](qvd);
+Store Arbitros_Jogo into [lib://DataFiles/Transformados/NBA/Arbitros_Jogo.qvd] (qvd);
+Drop Table Arbitros_Jogo;
+
+
+//
+Estatísticas_Temporada_Jogador_Radar:
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Arremesso 3pt' 				as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Acertos 3pt] - [EstatísticaMin - Acertos 3pt]) /
+    ([EstatísticaMax - Acertos 3pt] - [EstatísticaMin - Acertos 3pt])	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Acertos 3pt] > 0;
+
+Concatenate(Estatísticas_Temporada_Jogador_Radar)
+
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Arremesso 2pt' 												as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Acertos 2pt] - [EstatísticaMin - Acertos 2pt]) /
+    ([EstatísticaMax - Acertos 2pt] - [EstatísticaMin - Acertos 2pt]) 	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Acertos 2pt] > 0;
+
+Concatenate(Estatísticas_Temporada_Jogador_Radar)
+
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Lance Livre' 									as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Acertos Lances Livres] - [EstatísticaMin - Acertos Lances Livres]) /
+    ([EstatísticaMax - Acertos Lances Livres] - [EstatísticaMin - Acertos Lances Livres])	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Acertos Lances Livres] > 0;
+
+Concatenate(Estatísticas_Temporada_Jogador_Radar)
+
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Rebotes' 												as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Rebotes] - [EstatísticaMin - Rebotes]) /
+    ([EstatísticaMax - Rebotes] - [EstatísticaMin - Rebotes]) 	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Rebotes] > 0;
+
+
+Concatenate(Estatísticas_Temporada_Jogador_Radar)
+
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Assistências' 				as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Assistências] - [EstatísticaMin - Assistências]) /
+    ([EstatísticaMax - Assistências] - [EstatísticaMin - Assistências])	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Assistências] > 0;
+
+Concatenate(Estatísticas_Temporada_Jogador_Radar)
+
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Roubos' 				as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Roubos] - [EstatísticaMin - Roubos]) /
+    ([EstatísticaMax - Roubos] - [EstatísticaMin - Roubos])	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Roubos] > 0;
+
+Concatenate(Estatísticas_Temporada_Jogador_Radar)
+
+Load
+	PK_Jogador &'|'& Temporada 	as PK_Jogador_Temporada,
+   	'Bloqueios' 					as [EstatítsitcaRadar - Categoria],
+    ([Estatística - Bloqueios] - [EstatísticaMin - Bloqueios]) /
+    ([EstatísticaMax - Bloqueios] - [EstatísticaMin - Bloqueios])	as [EstatítsitcaRadar - Valor]
+From [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd] (qvd)
+Where [Estatística - Bloqueios] > 0;
+
+Store Estatísticas_Temporada_Jogador_Radar into [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador_Radar.qvd] (qvd); 
+Drop Table Estatísticas_Temporada_Jogador_Radar;
+
+
+
+
+
+
+
+
+
