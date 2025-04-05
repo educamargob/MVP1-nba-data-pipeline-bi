@@ -45,7 +45,8 @@ O objetivo principal é construir um pipeline de dados eficiente para coletar, t
 ## 📁 Estrutura GitHub
 
 - 📁 qlik/dados                    → Dados em formato .QVD para utilização no Qlik
-- 📁 qlik/dados                    → App desenvolvido no projeto em formato .QVF para utilização no Qlik
+- 📁 qlik/painel                   → App desenvolvido no projeto em formato .QVF para utilização no Qlik
+- 📁 qlik/painel/scripts           → Scripts que foram utilizados para coleta de dados dentro do app .QVF
 - 📁 snowflake/worksheets          → Scripts para criação do pipeline no Snowflake
 - 📄 Relatório MVP 1 PUC_Rio.pdf   → Relatório completo do projeto para apresentação MVP
 
