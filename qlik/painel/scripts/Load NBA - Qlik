@@ -1,0 +1,120 @@
+//
+Estatísticas_Temporada_Jogador:
+LOAD
+    PK_Jogador,
+    PK_Jogador_Temporada,
+    PK_Time_Temporada,
+    Temporada,
+    "Estatística - Idade Jogador",
+    "Estatística - Posição Jogador",
+    "Estatística - Jogos",
+    "Estatística - Minutos Jogados",
+    "Estatística - Arremessos",
+    "Estatística - Acertos",
+    "Estatística - % Acertos",
+    "Estatística - Arremessos 3pt",
+    "Estatística - Acertos 3pt",
+    "Estatística - % Acertos 3pt",
+    "Estatística - Arremessos 2pt",
+    "Estatística - Acertos 2pt",
+    "Estatística - % Acertos 2pt",
+    "Estatística - % Arremessos Eficazes",
+    "Estatística - Lances Livres",
+    "Estatística - Acertos Lances Livres",
+    "Estatística - % Acertos Lances Livres",
+    "Estatística - Rebotes Ofensivos",
+    "Estatística - Rebotes Defensivos",
+    "Estatística - Assistências",
+    "Estatística - Roubos",
+    "Estatística - Bloqueios",
+    "Estatística - Turnovers",
+    "Estatística - Faltas",
+    "Estatística - Pontos"
+FROM [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador.qvd](qvd);
+
+Jogadores:
+LOAD
+    PK_Jogador,
+    "Jogador - Nome Completo",
+    "Jogador - Ativo",
+    "Jogador - Data Nascimento",
+    "Jogador - Universidade",
+    "Jogador - País",
+    "Jogador - Altura Pol.",
+    "Jogador - Altura Cm",
+    "Jogador - Altura Pés",
+    "Jogador - Peso Libras",
+    "Jogador - Peso Kg",
+    "Jogador - Temporadas",
+    "Jogador - Posição",
+    "Jogador - Primeiro ano",
+    "Jogador - Rodada Draft",
+    "Jogador - Num Escolha Draft",
+    "Jogador - Top 75",
+    "Jogador - Time Draft",
+    "Jogador - Time Draft Cidade",
+    "Jogador - Time Draft Abreviação",
+    "Jogador - Organização Anterior",
+    "Jogador - Tipo Organização"
+FROM [lib://DataFiles/Transformados/NBA/Jogadores.qvd](qvd)
+Where Exists (PK_Jogador);
+
+
+//
+Estatísticas_Temporada_Jogador_Radar:
+LOAD
+    PK_Jogador_Temporada,
+    "EstatítsitcaRadar - Categoria",
+    "EstatítsitcaRadar - Valor"
+FROM [lib://DataFiles/Transformados/NBA/Estatísticas_Temporada_Jogador_Radar.qvd](qvd);
+
+
+//
+Times:
+LOAD
+    PK_Time,
+    "Time - Nome",
+    "Time - Nome Abreviado",
+    "Time - Apelido",
+    "Time - Estado",
+    "Time - Cidade",
+    "Time - Ano Fundação",
+    "Time - Ativo"
+FROM [lib://DataFiles/Transformados/NBA/Times.qvd](qvd);
+
+//
+Times_Campeões:
+Load
+	PK_Time,
+	"Campeão - Último Jogo Temporada"
+From [lib://DataFiles/Transformados/NBA/Times_Campeões.qvd] (qvd);
+
+//
+Jogos:
+LOAD
+    PK_Jogo,
+    PK_Time,
+    PK_Time_Temporada,
+    "Jogo - Posição Time",
+    "Jogo - Temporada",
+    "Jogo - Data",
+    "Jogo - AnoMês",
+    "Jogo - Adversário",
+    "Jogo - Ganhou/Perdeu",
+    "Jogo - Rebotes",
+    "Jogo - Assistências",
+    "Jogo - Roubos",
+    "Jogo - Bloqueios",
+    "Jogo - Turnovers",
+    "Jogo - Faltas",
+    "Jogo - Pontos",
+    "Jogo - Tipo Temporada"
+FROM [lib://DataFiles/Transformados/NBA/Jogos.qvd](qvd);
+
+//
+Arbitros_Jogo:
+LOAD
+    PK_Jogo,
+    PK_Arbitro,
+    "Arbitro - Nome Completo"
+FROM [lib://DataFiles/Transformados/NBA/Arbitros_Jogo.qvd](qvd);
