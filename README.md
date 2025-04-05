@@ -15,10 +15,10 @@ O objetivo principal é construir um pipeline de dados eficiente para coletar, t
 - **GitHub**: Versionamento e centralização dos scripts.
 - **Datasets**:
   - [NBA Database](https://www.kaggle.com/datasets/wyattowalsh/basketball)
-    - Fonte: API oficial do site [stats.nba.com](https://stats.nba.com)  
+    - Fonte de dados coletado pelo autor: API oficial do site [stats.nba.com](https://stats.nba.com)  
     - Autor: Wyatt Walsh
   - [NBA Players stats since 1950 ](https://www.kaggle.com/datasets/drgilermo/nba-players-stats)
-    - Fonte: [Basketball Reference](https://www.basketball-reference.com)   
+    - Fonte de dados coletado pelo autor: [Basketball Reference](https://www.basketball-reference.com)   
     - Autor: Omri Goldstein
 
 ---
@@ -44,10 +44,10 @@ O objetivo principal é construir um pipeline de dados eficiente para coletar, t
 
 ## ❓ Perguntas Respondidas
 
-- Quais equipes revelaram mais estrelas da NBA?
-- Como as estatísticas evoluíram ao longo do tempo?
-- Qual o impacto da altura no desempenho dos jogadores?
-- Quais universidades mais contribuíram para a NBA?
+- Quais as tendências e padrões em Drafts da NBA?
+- Existe um impacto da altura dos jogadores no desempenho em quadra?
+- Como as estatísticas dos jogadores evoluíram ao longo do tempo?
+- Quais equipes tiveram maior impacto na revelação de grandes estrelas?
 
 ---
 
