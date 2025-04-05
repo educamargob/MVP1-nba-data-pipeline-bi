@@ -4,7 +4,7 @@ Projeto desenvolvido como entrega de MVP (Produto Mínimo Viável) para o curso 
 
 ## 🎯 Objetivo
 
-Analisar dados históricos da NBA para responder perguntas analíticas relevantes, oferecendo insights sobre jogadores, times, drafts e estatísticas ao longo dos anos.
+O objetivo principal é construir um pipeline de dados eficiente para coletar, transformar e visualizar estatísticas da NBA, possibilitando a análise de tendências e extração de insights. A plataforma BI utilizada para apresentação dos dados será o Qlik, e o Snowflake será empregado para processamento e armazenamento dos dados (ETL)
 
 ---
 
@@ -14,10 +14,12 @@ Analisar dados históricos da NBA para responder perguntas analíticas relevante
 - **Qlik Cloud**: Visualização e análise interativa dos dados.
 - **GitHub**: Versionamento e centralização dos scripts.
 - **Datasets**:
-  - NBA Players Stats since 1950:
-    - Autor
-  - NBA Games
-  - Dados complementares (universidades, posições, top 75, etc.)
+  - [NBA Database](https://www.kaggle.com/datasets/wyattowalsh/basketball)
+    - Fonte: API oficial do site [stats.nba.com](https://stats.nba.com)  
+    - Autor: Wyatt Walsh
+  - (https://www.kaggle.com/datasets/drgilermo/nba-players-stats
+    - Fonte: [Basketball Reference](https://www.basketball-reference.com)   
+    - Autor: Omri Goldstein
 
 ---
 
@@ -31,12 +33,12 @@ Analisar dados históricos da NBA para responder perguntas analíticas relevante
 
 ## 📊 Dashboards Desenvolvidos
 
-- **Tela Inicial**: Visão geral de jogadores e times.
-- **Análise de Jogadores**: Estatísticas individuais com filtros e comparações.
-- **Drafts**: Perfil dos jogadores draftados.
+- **Dashboard**: Visão geral de jogadores e times.
 - **Times**: Evolução por temporada, localização e origem.
-- **Jogos**: Visualização e análise por mandante, visitante e datas.
-- **Comparação de Jogadores**: Gráfico radar e métricas lado a lado.
+- **Jogadores**: Dados individuais com filtros e comparações.
+- **Estatísticas Jogadores**: Dados estatísticos de jogadores, PTS/G, AST/G, REB/G, etc.
+- **Comparativo Jogadores**: Gráfico radar e métricas lado a lado.
+- **Drafts**: Perfil dos jogadores draftados.
 
 ---
 
@@ -49,11 +51,12 @@ Analisar dados históricos da NBA para responder perguntas analíticas relevante
 
 ---
 
-## 📈 Resultados
+## 🔗 Referências dos Dados
 
-- Dashboards funcionais e informativos.
-- Insights relevantes extraídos a partir de diferentes visões.
-- Experiência prática com pipeline de dados em Snowflake.
-- Consolidação de conhecimentos em modelagem de dados e BI.
+- [NBA Database (Kaggle)](https://www.kaggle.com/datasets/wyattowalsh/basketball)
+- [NBA Players Stats Since 1950 (Kaggle)](https://www.kaggle.com/datasets/drgilermo/nba-players-stats)
 
----
+## 📌 Observações
+- **Informações detalhadas do trabalho, como metodologia e resultados, podem ser obtidos no PDF do MVP**
+- Algumas etapas de tratamento de dados foram feitas manualmente devido a inconsistências entre os datasets.
+- O projeto foi estruturado em zonas de dados: Landing, Curated e Consumption.
